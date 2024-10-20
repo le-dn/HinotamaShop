@@ -83,7 +83,7 @@ public class PaymentsController(
                 await unit.Repository<Order>().GetEntityWithSpec(spec)
                 ?? throw new Exception("Order not found");
 
-            if ((long)order.GetTotal() * 100 != intent.Amount)
+            if (order.GetTotal() * 100 != intent.Amount)
             {
                 order.Status = OrderStatus.PaymentMismatch;
             }

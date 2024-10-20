@@ -10,6 +10,8 @@ public static class OrderMappingExtensions
         var orderDto = order.MapTo<OrderDto>();
         orderDto.ShippingAddress = order.ShippingAddress.MapTo<ShippingAddressDto>();
         orderDto.PaymentSummary = order.PaymentSummary.MapTo<PaymentSummaryDto>();
+        orderDto.DeliveryMethod = order.DeliveryMethod.Description;
+        orderDto.ShippingPrice = order.DeliveryMethod.Price;
         orderDto.OrderItems = order.OrderItems.Select(x => x.ToDto()).ToList();
         orderDto.Total = order.GetTotal();
         orderDto.Status = order.Status.ToString();
