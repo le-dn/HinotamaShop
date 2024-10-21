@@ -31,7 +31,7 @@ export class CartService {
 
     if (cart.coupon) {
       if (cart.coupon.amountOff) {
-        discountValue = cart.coupon.amountOff;
+        discountValue = cart.coupon.amountOff / 100;
       } else if (cart.coupon.percentOff) {
         discountValue = subtotal * (cart.coupon.percentOff / 100);
       }
