@@ -176,7 +176,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       (await this.getAddressFromStripeAddress()) as ShippingAddress;
     const card = this.confirmationToken?.payment_method_preview.card;
 
-    if (!cart?.id || !cart?.deliveryMethodId || !card || !shippingAddress) {
+    if (!cart?.id || !cart.deliveryMethodId || !card || !shippingAddress) {
       throw new Error('Problem creating order');
     }
 
@@ -190,6 +190,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       },
       deliveryMethodId: cart.deliveryMethodId,
       shippingAddress,
+      discount: this.cartService.totals()?.discount,
     };
   }
 
