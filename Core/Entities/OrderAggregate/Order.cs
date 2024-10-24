@@ -1,3 +1,5 @@
+using Core.Interfaces;
+
 namespace Core.Entities.OrderAggregate;
 
 public class Order : BaseEntity

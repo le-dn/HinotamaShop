@@ -1,13 +1,30 @@
 using System.Reflection;
 using System.Text.Json;
 using Core.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Data;
 
 public class StoreContextSeed
 {
-    public static async Task SeedAsync(StoreContext context)
+    public static async Task SeedAsync(
+        StoreContext context,
+        UserManager<AppUser> userManager,
+        IConfiguration config
+    )
     {
+        var email = config["AdminUser:Email"]!;
+        var password = config["AdminUser:Password"]!;
+
+        if (!userManager.Users.Any(x => x.Email == email))
+        {
+            var user = new AppUser { UserName = email, Email = email };
+
+            await userManager.CreateAsync(user, password);
+            await userManager.AddToRoleAsync(user, "Admin");
+        }
+
         var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         if (!context.Products.Any())
